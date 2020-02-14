@@ -1,17 +1,17 @@
 import os
 import sys
-
+import time
 
 class Min_heap():
     
     def Parent(self, Index ):
-        return Index // 2
+        return Index >> 1
     
     def Left ( self, Index):
-        return Index * 2
+        return Index << 1
     
     def Right ( self, Index):
-        return (Index * 2) +1
+        return (Index << 1 ) +1
     
     def __init__(self ):
         self.Heap_Length = 0
@@ -43,7 +43,7 @@ class Min_heap():
     def Create_heap(self, Array):
         self.Heap_Array = self.Heap_Array + Array
         self.Heap_Length = len( Array )
-        Index = self.Heap_Length // 2
+        Index = self.Heap_Length >> 1
         
         while Index:
             self.Heapify( Index )
@@ -82,7 +82,7 @@ def cookies(k, A):
         Second = Cookie_Heap.Extract_Min( )
         if First == -1 or Second == -1:
             return -1
-        Cookie_Heap.Add_Element( First + ( Second * 2) )
+        Cookie_Heap.Add_Element( First + ( Second << 1) )
         sweetness=Cookie_Heap.Minimim()
         operations = operations + 1
     
@@ -94,12 +94,10 @@ def cookies(k, A):
 if __name__ == '__main__':
     file = open( 'J&C[Test_Case_12].txt' )
     nk = file.readline().strip().split()
-
     n = int(nk[0])
-
     k = int(nk[1])
-
     A = list(map(int, file.readline().rstrip().split()))
-
+    start = time.clock()
     result = cookies(k, A)
-    print( result )
+    end=time.clock()
+    print( result , 'Time Taken =', (end - start) )
