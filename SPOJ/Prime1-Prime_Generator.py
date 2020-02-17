@@ -1,38 +1,30 @@
-from time import time
 
-def SieveOfEratosthenes( Number ):
-    # Prime_List = [ True for i in range( Number + 1)]
-    Prime_List = [ True] * ( Number + 1)
-    Start = 2
-    while( Start * Start <= Number):
-        if Prime_List[ Start] :
-            for i in range( Start << 1, Number + 1, Start):
-                Prime_List[i] = False
-        Start = Start + 1
-    Prime_List[1] = False
-    return Prime_List
-            
+def Prime_list( Start, end):
+    if Start == 1:
+        Start = 2
+    Primes =  list( range( Start, end + 1 ))
+    Length = len( Primes)
+    Dividers = list( range(2,int(end ** 0.5 ) + 1 ) )
+    for Number_index, Number in enumerate(Primes):
+        if Number :
+            for Divide_index, Divide in enumerate( Dividers):
+                if Number % Divide == 0 and Divide < Number:
+                    for i in range( Number_index, Length, Divide):
+                        Primes[i] = False
+                    Dividers.pop( Divide_index)
+    return( Primes)
 
 if __name__ == "__main__":
     Times = int( input().strip())
-    Biggest = 0
-    Cases = []
-    while Times:
+    Output = ''
+    for time in range(Times):
+        if time > 0:
+            Output += '\n'
+        
         Start, End = map( int, input().split())
-        if End > Biggest:
-            Biggest = End
-        Cases.append( ( Start, End) )
-        Times = Times - 1
-    t0 = time()
-    print( SieveOfEratosthenes( Biggest)) 
-    # for Case in  Cases:
-    #     for i in range( Case[0], Case[1] + 1):
-    #         if Prime_List[i]:
-    #             print( i )
-    #     print(' ')
-    t1 = time()
-    
-    print('Time taken is ', t1 - t0)
-    
+        for number in Prime_list( Start, End):
+            if number:
+                Output += str( number) + '\n'
+    print( Output)
     exit(0)
     
