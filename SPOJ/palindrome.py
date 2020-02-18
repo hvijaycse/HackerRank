@@ -1,51 +1,56 @@
 
-def Plaindrome( ):
-    Number = int(input())
-    Number1 = Number
-    
-    if not Number:
-        print('1')
-        return 
-    
-    num =[]
-    Length = 0
-    while Number:
-        num.insert( 0, Number % 10)
-        Number = Number // 10 
-        Length = Length + 1
-    
-    if num.count(9) == Length:
-        print( Number1 + 2)
-        return
-     
-    Second_Num = list(num)
-    Mid_Element = Length >> 1
-    
-    if Length % 2 == 0:
-        Mid_Element = Mid_Element - 1
-         
-    temp = Mid_Element 
-    
-    while temp + 1 :
-        num[ Length - temp -1]  = num[ temp]
-        temp = temp - 1
-        
-    while num <= Second_Num:
-        num[Mid_Element] = num[Mid_Element] + 1
-        num[ -Mid_Element -1] = num[Mid_Element]
-        temp = Mid_Element
-        while num[temp] > 9:
-            num[temp] = num[ -temp -1 ] = 0
-            num[ temp -1] = num[-temp] = (num[temp -1 ] + 1)
-            temp = temp - 1
-                              
-    for  value in num:
-        print(value, end='')
-    print('')            
-            
-if __name__ == "__main__":
-    times = int( input())
-    while times:
-        Plaindrome()
-        times = times - 1
+from time import perf_counter as  time
+from sys import stdout, stdin
+
+Changers = {
+    '0':'1',
+    '1':'2',
+    '2':'3',
+    '3':'4',
+    '4':'5',
+    '5':'6',
+    '6':'7',
+    '7':'8',
+    '8':'9',
+    '9':'0'
+}
+
+if __name__ ==  "__main__":
+    # times = int( stdin.readline().strip() )
+    file = open('palindrome_testcase.txt','r')
+    times = int(file.readline().strip())
+    Output = ""
+    Start = time()
+    for t in range(times):
+        # Number = int( stdin.readline().strip())
+        Number = int( file.readline().strip())
+        if not Number:
+            Output += '1\n'
+            continue
+        num = [i for i in str(Number)]
+        Length = len(num)
+        if num.count('9') == Length:
+            Output += str( Number + 2) + '\n'
+            continue
+        Mid_ELement = Length >> 1
+        if  not Length & 1:
+            Mid_ELement -= 1
+        Original_num = list(num)
+        temp = 0
+        while temp <= Mid_ELement:
+            num[ -temp - 1] = num[temp]
+            temp += 1
+        if num <= Original_num:
+            temp = Mid_ELement
+            num[temp] = Changers[ num[temp] ]
+            num[-temp -1] = num[temp]
+            while num[temp] == '0':
+                temp -= 1
+                num[temp] = Changers[ num[temp] ]
+                num[-temp -1] = num[temp]
+        Output += ''.join(num) + '\n'
+    stdout.write(Output)
+    End = time()
+    stdout.write('Time taken = '+ str( End - Start))
     exit(0)
+                                        

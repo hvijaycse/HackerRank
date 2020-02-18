@@ -21,6 +21,7 @@ for i in range(3,32000,2):
 t1 = time()
 T = int(input())
 output = ""
+count = 0
 for t in range(T):
 
     if (t > 0):
@@ -58,8 +59,10 @@ for t in range(T):
     for i in range(M,N+1):
         if (isprime[i-M] == True):
             output += str(i) + "\n"
+            count +=1
 
 print (output[:-1])
 t4 = time()
 print('\n time taken to calculate prime is ',(t1 - t0),'\n',
-      'Time taken to calcuate and print is ',(t4 - t2))
+      'Time taken to calcuate and print is ',(t4 - t2),
+      'Count is ', count)
