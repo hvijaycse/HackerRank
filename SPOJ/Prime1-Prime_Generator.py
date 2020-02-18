@@ -1,3 +1,4 @@
+from time import time
 
 def Prime_list( Start, end):
     if Start == 1:
@@ -9,8 +10,10 @@ def Prime_list( Start, end):
         if Number :
             for Divide_index, Divide in enumerate( Dividers):
                 if Number % Divide == 0 and Divide < Number:
-                    for i in range( Number_index, Length, Divide):
-                        Primes[i] = False
+                    False_Block = [False] * len( Primes [Number_index: : Divide] )
+                    Primes [Number_index: : Divide] = False_Block
+                    # for i in range( Number_index, Length, Divide):
+                    #     Primes[i] = False
                     Dividers.pop( Divide_index)
     return( Primes)
 
@@ -22,9 +25,12 @@ if __name__ == "__main__":
             Output += '\n'
         
         Start, End = map( int, input().split())
+        # t0 = time()
         for number in Prime_list( Start, End):
             if number:
                 Output += str( number) + '\n'
     print( Output)
+    # t1 = time()
+    # print('Time taken = '(t1 - t0))
     exit(0)
     

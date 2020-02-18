@@ -1,45 +1,51 @@
-def rev(string):
-    temp=''
-    lenght=len(string)
-    while lenght:
-        temp+=string[lenght-1]
-        lenght-=1
-    return temp
-        
 
-def palin():
-    string=input().strip()
-    lenght=len(string)
-    if string=='9'*lenght:
-        return str(int(string)+2)
-    mid=lenght//2
-    if lenght%2 !=0:
-        number=int(string[0:mid+1])
-        temp=str(number)
-        temp=temp+rev(temp[0:-1])
-        while temp<string:
-                number+=1
-                temp=str(number)
-                temp+=rev(temp)
+def Plaindrome( ):
+    Number = int(input())
+    Number1 = Number
+    
+    if not Number:
+        print('1')
+        return 
+    
+    num =[]
+    Length = 0
+    while Number:
+        num.insert( 0, Number % 10)
+        Number = Number // 10 
+        Length = Length + 1
+    
+    if num.count(9) == Length:
+        print( Number1 + 2)
+        return
+     
+    Second_Num = list(num)
+    Mid_Element = Length >> 1
+    
+    if Length % 2 == 0:
+        Mid_Element = Mid_Element - 1
+         
+    temp = Mid_Element 
+    
+    while temp + 1 :
+        num[ Length - temp -1]  = num[ temp]
+        temp = temp - 1
         
-    else:
-        if string[mid-1]>string[mid]:
-            temp=string[0:mid]+rev(string[0:mid])            
-        else:
-            number=int(string[:mid])
-            temp=str(number)
-            temp+=rev(temp)
-            while temp<string:
-                number+=1
-                temp=str(number)
-                temp+=rev(temp)
-                
-    
-    return temp
-    
-if __name__=="__main__":
-    times=int(input())
+    while num <= Second_Num:
+        num[Mid_Element] = num[Mid_Element] + 1
+        num[ -Mid_Element -1] = num[Mid_Element]
+        temp = Mid_Element
+        while num[temp] > 9:
+            num[temp] = num[ -temp -1 ] = 0
+            num[ temp -1] = num[-temp] = (num[temp -1 ] + 1)
+            temp = temp - 1
+                              
+    for  value in num:
+        print(value, end='')
+    print('')            
+            
+if __name__ == "__main__":
+    times = int( input())
     while times:
-        print(palin(),'\n')
-        times=times-1
+        Plaindrome()
+        times = times - 1
     exit(0)
