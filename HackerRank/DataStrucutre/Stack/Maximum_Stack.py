@@ -1,22 +1,30 @@
-from time import time
 
 class Stack():
     
     def __init__(self, Size):
         self.Stack=[0] * Size
-        self.Index = -1
-        self.Stack_Size = 10
+        self.Head = -1
+        
+        self.Max_Stack=[0] *(Size + 1)
+        self.Max_Head = 1
 
     def pop(self):
-        self.Index =self.Index - 1
+        if self.Stack[self.Head] == self.Max_Stack[self.Max_Head - 1] :
+            self.Max_Stack[self.Max_Head - 1] = 0
+            self.Max_Head = self.Max_Head - 1
+        self.Head = self.Head - 1
             
     def Push(self, Element):
-        Index = self.Index + 1
-        self.Stack[Index] = Element
-        self.Index = Index
+        Head = self.Head + 1
+        Max_Head = self.Max_Head 
+        self.Stack[Head] = Element
+        if Element >= self.Max_Stack[ Max_Head - 1]:
+            self.Max_Stack[Max_Head] = Element
+            self.Max_Head = Max_Head + 1
+        self.Head = Head
     
     def Maximum(self):
-        return( max( self.Stack[: self.Index + 1] ))
+        return self.Max_Stack[self.Max_Head -1 ]
        
 
 if __name__ == "__main__":
@@ -29,6 +37,7 @@ if __name__ == "__main__":
         elif command[0]  == '2':
             Stack.pop()
         else:
-            print('Output ', Stack.Maximum())
+            print( Stack.Maximum() )
         Cases = Cases - 1 
+    
     

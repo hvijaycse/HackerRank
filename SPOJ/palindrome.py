@@ -16,9 +16,9 @@ Changers = {
 }
 
 if __name__ ==  "__main__":
-    # times = int( stdin.readline().strip() )
-    file = open('palindrome_testcase.txt','r')
-    times = int(file.readline().strip())
+    times = int( stdin.readline().strip() )
+    file = open('num.txt','r')
+    # times = int(file.readline().strip())
     Output = ""
     Start = time()
     for t in range(times):
