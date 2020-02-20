@@ -16,30 +16,37 @@ Changers = {
 }
 
 if __name__ ==  "__main__":
-    times = int( stdin.readline().strip() )
+    # file = open('palindrome_testcase.txt','r')
     file = open('num.txt','r')
+    times = int( stdin.readline().strip() )
     # times = int(file.readline().strip())
     Output = ""
     Start = time()
     for t in range(times):
-        # Number = int( stdin.readline().strip())
-        Number = int( file.readline().strip())
-        if not Number:
-            Output += '1\n'
-            continue
-        num = [i for i in str(Number)]
+        # Number = stdin.readline().strip()
+        Number = file.readline().strip()
+        num = [i for i in Number]
         Length = len(num)
         if num.count('9') == Length:
-            Output += str( Number + 2) + '\n'
+            Output += '1' + '0'*(Length -1 ) + '1' + '\n'
+            # print( '1' + '0'*(Length -1 ) + '1' + '\n')
             continue
-        Mid_ELement = Length >> 1
-        if  not Length & 1:
-            Mid_ELement -= 1
         Original_num = list(num)
-        temp = 0
-        while temp <= Mid_ELement:
-            num[ -temp - 1] = num[temp]
-            temp += 1
+        Mid_ELement = Length >> 1
+        if  Length & 1:
+            # numeber is of odd length
+            try:
+                num[Mid_ELement + 1 : ] = list( reversed( num[ : Mid_ELement]))
+            except :
+                pass
+        else:
+            # number is even 
+            try:
+                num[Mid_ELement : ] = list( reversed( num[ : Mid_ELement]))
+            except:
+                pass
+            Mid_ELement -= 1 
+            
         if num <= Original_num:
             temp = Mid_ELement
             num[temp] = Changers[ num[temp] ]
@@ -48,9 +55,10 @@ if __name__ ==  "__main__":
                 temp -= 1
                 num[temp] = Changers[ num[temp] ]
                 num[-temp -1] = num[temp]
+        # print( ''.join(num) )
         Output += ''.join(num) + '\n'
     stdout.write(Output)
     End = time()
     stdout.write('Time taken = '+ str( End - Start))
     exit(0)
-                                        
+                                    
