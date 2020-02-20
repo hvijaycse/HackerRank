@@ -1,5 +1,3 @@
-
-from time import perf_counter as  time
 from sys import stdout, stdin
 
 Changers = {
@@ -16,20 +14,14 @@ Changers = {
 }
 
 if __name__ ==  "__main__":
-    # file = open('palindrome_testcase.txt','r')
-    file = open('num.txt','r')
     times = int( stdin.readline().strip() )
-    # times = int(file.readline().strip())
     Output = ""
-    Start = time()
     for t in range(times):
-        # Number = stdin.readline().strip()
-        Number = file.readline().strip()
+        Number = stdin.readline().strip()
         num = [i for i in Number]
         Length = len(num)
         if num.count('9') == Length:
             Output += '1' + '0'*(Length -1 ) + '1' + '\n'
-            # print( '1' + '0'*(Length -1 ) + '1' + '\n')
             continue
         Original_num = list(num)
         Mid_ELement = Length >> 1
@@ -55,10 +47,7 @@ if __name__ ==  "__main__":
                 temp -= 1
                 num[temp] = Changers[ num[temp] ]
                 num[-temp -1] = num[temp]
-        # print( ''.join(num) )
         Output += ''.join(num) + '\n'
     stdout.write(Output)
-    End = time()
-    stdout.write('Time taken = '+ str( End - Start))
     exit(0)
                                     
