@@ -13,6 +13,7 @@ Changers = {
     '9':'0'
 }
 
+
 if __name__ ==  "__main__":
     times = int( stdin.readline().strip() )
     Output = ""
