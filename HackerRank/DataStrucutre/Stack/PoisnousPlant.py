@@ -1,5 +1,5 @@
 def Dating( Before, Stack):
-    print( Before, Stack)
+    # print( Before, Stack)
     Max_Days = 0
     while Stack:
         TOP = Stack.pop()
