@@ -1,3 +1,5 @@
+from time import clock as time
+
 def Dating( Before, Stack):
     # print( Before, Stack)
     Max_Days = 0
@@ -21,6 +23,7 @@ def Dating( Before, Stack):
                 else:
                     TO_Be_Breaked = True
                 Biggest = New
+            print(MINI[:10])
             if TO_Be_Breaked:
                 MINI.reverse()
                 Days = 1 + Dating( Before, MINI)
@@ -30,14 +33,16 @@ def Dating( Before, Stack):
 
 
 if __name__ == "__main__":
-    # file = open('32400.txt')
-    # Number = int(file.readline())
-    Number = int( input() )
-    # start = time()
-    Plants =  list( map(int, input().split() ) )
-    # Plants =  list( map(int, file.readline().split() ) )
+    file = open('test2.txt')
+    Number = int(file.readline())
+    # Number = int( input() )
+    # Plants =  list( map(int, input().split() ) )
+    Plants =  list( map(int, file.readline().split() ) )
     Max_Days = 0
     Plants.reverse()
     Before = Plants.pop()
+    start = time()
     Days = Dating(Before, Plants)
     print(Days)
+    end = time()
+    print('Time taken = ',(end - start))
