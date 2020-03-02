@@ -16,8 +16,3 @@ if __name__ == "__main__":
                 break
         stack.append(value)    
     print( s1_max)
-        
-            
-    
-         
-
