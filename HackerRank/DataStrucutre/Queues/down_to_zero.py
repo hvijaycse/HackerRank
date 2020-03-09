@@ -6,25 +6,26 @@
 #
 from time import clock
 
-def Downer( array, query):
-    if array[query] != float('inf'):
-        return
-    for i in range( 2, int(query**0.5) + 1):
-        if query % i == 0:
-            k = query // i
-            if array[k] + 1 < array[query]:
-                array[query] = array[k] + 1
-    if array[query] > array[query - 1] + 1:
-        array[query] = array[query - 1] + 1
-        
+
     
 def downToZero( Queries, maximum):
-    answers = [float('inf')] * (maximum + 1)
-    answers[0] = 0
-    for i in range( 1, maximum + 1):
-        Downer( answers, i)
+    if maximum < 1:
+        print(0)
+        return
+    Array = [float('inf')]*(maximum + 1)
+    Array[0] = 0
+    Array[1] = 1
+    
+    for index in range( 2, maximum + 1):
+        if Array[index] > Array[index - 1] + 1:
+            Array[index] = Array[ index - 1] + 1
+        Mul = 2
+        while Mul * index < maximum + 1 and Mul <= index:
+            if Array[Mul * index] > Array[index] + 1:
+                Array[Mul * index] = Array[index] + 1
+            Mul = Mul + 1
     for query in Queries:
-        print(answers[query])
+        print( Array[query])    
 
 if __name__ == '__main__':
 
@@ -37,7 +38,7 @@ if __name__ == '__main__':
         if n > maximum:
             maximum = n
         Queries.append( n)
-    Start = clock()
+    # Start = clock()
     downToZero(Queries, maximum )
-    end = clock()
-    print('Time taken ', end - Start)
+    # end = clock()
+    # print('Time taken ', end - Start)
