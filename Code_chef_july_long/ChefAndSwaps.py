@@ -1,80 +1,72 @@
-
-
-def Solver( Array1, Array2):
-    Dict1 = {}
-    Dict2 = {}
-    DictTotal = {}
-    cost = 0
-    i = 0
-    N = len( Array1)
-    j = N - 1
-
-    for a in Array1:
-        if a not in Dict1:
-            Dict1[a] = 1
-            DictTotal[a] =1
-        else:
-            Dict1[a] += 1
-            DictTotal[a] += 1
-
-    for b in Array2:
-        if b not in Dict2:
-            Dict2[b] = 1
-        else:
-            Dict2[b] += 1
-        if b not in DictTotal:
-            DictTotal[b] = 1
-        else:
-            DictTotal[b] += 1
-
-    for num in DictTotal.keys():
-        if DictTotal[num] % 2 != 0:
-            return -1
-    Array1.sort()
-    Array2.sort()
-
-    while i < N:
-        while  i < N and Array1[i] == Array2[i]:
-            i += 1
-        while j > -1 and Array1[j] == Array2[j]:
-            j -= 1
-        if i < N:
-            TopLeft, TopRight = Array1[i], Array1[j]
-            BotLeft, BotRight = Array1[i], Array2[j]
-            if Dict1[TopLeft] == Dict2[TopLeft]:
-                TopLeftV = False
-            else:
-                TopLeftV = True
-
-            if Dict1[TopRight] == Dict2[TopRight]:
-                TopRightV = False
-            else:
-                TopRightV = True
-
-            if Dict1[BotLeft] == Dict2[BotLeft]:
-                BotLeftV = False
-            else:
-                BotLeftV = True
-
-            if Dict1[BotRight] == Dict2[BotRight]:
-                BotRightV = False
-            else:
-                BotRightV = True
-            
-
-            
-
+# cook your dish here
 
 
 def main():
     TestCase = int( input() )
     while TestCase:
         TestCase -= 1
+        Cost = 0
         N = int( input() )
         A = list( map( int, input().split() ) )[ :N ]
         B = list( map( int, input().split() ) )[ :N ]
-        Ans = Solver(A, B)
-        print( Ans)
+        DictA = {}
+        DictB = {}
+        DictT = {}
+        for a in A:
+            if a not in DictA:
+                DictA[a] = 1
+                DictT[a] = 1
+            else:
+                DictA[a] += 1
+                DictT[a] += 1
+
+        for b in B:
+            if b not in DictB:
+                DictB[b] = 1
+            else:
+                DictB[b] += 1
+
+            if b not in DictT:
+                DictT[b] = 1
+            else:
+                DictT[b] += 1
+
+        WillContinue = True
+        for elm in DictT.keys() :
+            if DictT[elm] % 2 != 0:
+                print(-1)
+                WillContinue = False
+                break
+
+        if WillContinue:
+            for elm in DictT.keys():
+                if elm not in DictA:
+                    DictA[elm] = 0
+                if elm not in DictB:
+                    DictB[elm] = 0
+            A_Great = []
+            B_Great = []
+            for elm in DictT.keys():
+                if DictA[elm] > DictB[elm]:
+                    A_Great.append( elm )
+                elif DictB[elm] > DictA[elm]:
+                    B_Great.append( elm ) 
+            A_Great.sort( reverse = True)
+            B_Great.sort()
+            while A_Great and B_Great:
+                a = A_Great[-1]
+                b = B_Great[-1]
+                DictA[a] -= 1
+                DictB[a] += 1
+                DictA[b] += 1
+                DictB[b] -= 1
+                if DictA[a] == DictB[a]:
+                    A_Great.pop()
+                if DictB[b] == DictA[b]:
+                    B_Great.pop()
+                Cost += min( [a, b])
+            print( Cost)
+       
 
 if __name__ == "__main__":
     main()
