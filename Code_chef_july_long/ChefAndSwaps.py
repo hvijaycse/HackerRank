@@ -36,10 +36,9 @@ def main():
                 print(-1)
                 WillContinue = False
                 break
-            DictT[elm] = DictT[ elm] // 2
         if WillContinue:
             ans = 0
-            Minimum = min( DictT.keys())
+            Minimum = min( DictT.keys()) * 2
             A_list = []
             B_list = []
             for elm in DictB.keys():
@@ -49,7 +48,7 @@ def main():
                     A_count = DictA[elm]
                 if DictB[elm] > A_count:
                     Length = DictB[elm] - A_count  
-                    for i in range( Length):
+                    for i in range( Length //2):
                         B_list.append(elm)          
             for elm in DictA.keys():
                 if elm not in DictB:
@@ -58,32 +57,18 @@ def main():
                     B_count = DictB[elm]
                 if DictA[elm] > B_count:
                     Length = DictA[elm] - B_count
-                    for i in  range( Length):
+                    for i in  range( Length // 2):
                         A_list.append( elm)
             A_list.sort()
-            B_list.sort()
-            Length = len( A_list)
-            while A_list and B_list:
-                if A_list[0] < B_list[0]:
-                    if A_list[0] * ( Length -1 ) > (Minimum* Length):
-                        ans += Minimum * Length
-                        break
-                    else:
-                        ans += A_list[0] 
-                    A_list = A_list[2:]
-                    B_list.pop()
-                    B_list.pop()
-                    Length -= 2
+            B_list.sort( reverse = True)
+            Final = []
+            for a, b in zip( A_list, B_list):
+                Final.append( min(( a, b)))
+            for f in Final:
+                if f > Minimum:
+                    ans += Minimum
                 else:
-                    if B_list[0] * ( Length -1 ) > (Minimum* Length):
-                        ans += Minimum * Length
-                        break
-                    else:
-                        ans += B_list[0] 
-                    B_list = B_list[2:]
-                    A_list.pop()
-                    A_list.pop()
-                    Length -= 2
+                    ans += f
             print( ans)
 
 if __name__ == "__main__":
