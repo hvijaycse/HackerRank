@@ -5,7 +5,6 @@ def main():
     TestCase = int( input() )
     while TestCase:
         TestCase -= 1
-        Cost = 0
         N = int( input() )
         A = list( map( int, input().split() ) )[ :N ]
         B = list( map( int, input().split() ) )[ :N ]
@@ -37,36 +36,55 @@ def main():
                 print(-1)
                 WillContinue = False
                 break
-
+            DictT[elm] = DictT[ elm] // 2
         if WillContinue:
-            for elm in DictT.keys():
+            ans = 0
+            Minimum = min( DictT.keys())
+            A_list = []
+            B_list = []
+            for elm in DictB.keys():
                 if elm not in DictA:
-                    DictA[elm] = 0
+                    A_count = 0
+                else:
+                    A_count = DictA[elm]
+                if DictB[elm] > A_count:
+                    Length = DictB[elm] - A_count  
+                    for i in range( Length):
+                        B_list.append(elm)          
+            for elm in DictA.keys():
                 if elm not in DictB:
-                    DictB[elm] = 0
-            A_Great = []
-            B_Great = []
-            for elm in DictT.keys():
-                if DictA[elm] > DictB[elm]:
-                    A_Great.append( elm )
-                elif DictB[elm] > DictA[elm]:
-                    B_Great.append( elm ) 
-            A_Great.sort( reverse = True)
-            B_Great.sort()
-            while A_Great and B_Great:
-                a = A_Great[-1]
-                b = B_Great[-1]
-                DictA[a] -= 1
-                DictB[a] += 1
-                DictA[b] += 1
-                DictB[b] -= 1
-                if DictA[a] == DictB[a]:
-                    A_Great.pop()
-                if DictB[b] == DictA[b]:
-                    B_Great.pop()
-                Cost += min( [a, b])
-            print( Cost)
-       
+                    B_count = 0
+                else:
+                    B_count = DictB[elm]
+                if DictA[elm] > B_count:
+                    Length = DictA[elm] - B_count
+                    for i in  range( Length):
+                        A_list.append( elm)
+            A_list.sort()
+            B_list.sort()
+            Length = len( A_list)
+            while A_list and B_list:
+                if A_list[0] < B_list[0]:
+                    if A_list[0] * ( Length -1 ) > (Minimum* Length):
+                        ans += Minimum * Length
+                        break
+                    else:
+                        ans += A_list[0] 
+                    A_list = A_list[2:]
+                    B_list.pop()
+                    B_list.pop()
+                    Length -= 2
+                else:
+                    if B_list[0] * ( Length -1 ) > (Minimum* Length):
+                        ans += Minimum * Length
+                        break
+                    else:
+                        ans += B_list[0] 
+                    B_list = B_list[2:]
+                    A_list.pop()
+                    A_list.pop()
+                    Length -= 2
+            print( ans)
 
 if __name__ == "__main__":
     main()
