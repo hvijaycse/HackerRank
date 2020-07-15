@@ -5,13 +5,12 @@ def main():
     while TestCase:
         TestCase -= 1
         N = int( input())
-        data  = list( map( int, input().split() ) )[: N]
-        Wall = [ a/2 for a in data]
+        Wall  = list( map( int, input().split() ) )[: N]
         Query = int( input() )
         while Query:
             Query -= 1
             x, y = map( int , input().split())
-            point = (x + y ) / 2
+            point = (x + y ) 
             start = 0
             end = N -1
             mid = (start + end )//2
