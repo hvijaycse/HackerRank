@@ -1,4 +1,11 @@
 
+def GetSet(Num):
+    setbit = set()
+    mask = 1
+    for pos in range(0, 32):
+        if ( mask << pos) & Num:
+            setbit.add( pos)
+    return setbit
 
 def main():
     TestCase = int( input() )
@@ -6,16 +13,26 @@ def main():
         TestCase -= 1
         Data = list( map( int, input().split()))
         Batteries = Data[1:]
-        Batteries.sort()
-        last_Battery = Batteries[0]
-        Count = 1
-        for battery in Batteries[1:]:
-            New_battery = last_Battery | battery
-            if New_battery == battery:
-                Count = 0
-            Count += 1
-            last_Battery = New_battery
-        print( Count)
+        allSet = []
+        maxOR = 0
+        for Battery in Batteries:
+            maxOR = maxOR | Battery
+            allSet.append( GetSet( Battery))
+        MaxSet = GetSet( maxOR)
+        Covered = set()
+        AnswerSet = []
+        while len( Covered) != len( MaxSet): # Using Len cause it will consume O(1) time not O(n)
+            MaxDiff = max(
+                allSet,
+                key = lambda x: len( x- Covered)
+            )
+            Covered = Covered | MaxDiff
+            AnswerSet.append( MaxDiff)
+        print( len( AnswerSet))
+
+
+        
+ 
 if __name__ == "__main__":
     main()
     exit(0)
