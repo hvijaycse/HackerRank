@@ -19,58 +19,64 @@ def no():
     print('NO')
 
 
-def getminjoin(Seperated,K,key, Dicts ):
-    if key not in Dicts:
-        if len( Seperated) == 1:
-            dict_count = {}
-            for r in Seperated[0]:
-                if r not in dict_count:
-                    dict_count[r] = 1
-                else:
-                    dict_count[r] += 1
-            Dicts[key] = K + sum( [i for i in dict_count.values() if i >1])
+def AddDict(Dict1, Dict2):
+    tmp_dict = {}
+    for k, v in Dict1.items():
+        tmp_dict[k] = v
+    for k, v in Dict2.items():
+        if k in tmp_dict:
+            tmp_dict[k] += v
         else:
-            Dicts[key] = 0
-            for sep in Seperated:
-                dict_count = {}
-                for r in sep:
-                    if r not in dict_count:
-                        dict_count[r] = 1
-                    else:
-                        dict_count[r] += 1
-                Dicts[key] += K + sum([ i for i in Dicts.values() if i > 1])
-            for i in range( len( Seperated) -1):
-                tmp_key = key[:i] + str( int( key[i] )+ int(key[i+1])) +key[i+2:]
-                tmp_join = Seperated[:i]+ [Seperated[i]+ Seperated[i+1]]+ Seperated[i+2:]
-                Dicts[key] = min(
-                    Dicts[key],
-                    getminjoin( tmp_join, K, tmp_key, Dicts)
-                )
-    return Dicts[key]
+            tmp_dict[k] = v
+    return tmp_dict
 
-def wed(Relative, K):
-    Seperated = []
-    tmp_array = []
-    for r in Relative:
-        if r not in tmp_array:
-            tmp_array.append(r)
+
+def GetJoined(CD, K, Key, VD):
+    DKey = ''.join(Key)
+    if DKey not in VD:
+        if len(CD) == 1:
+            VD[DKey] = K + sum([f for f in CD[0].values() if f > 1])
         else:
-            Seperated.append(tmp_array)
-            tmp_array = [r]
-    if tmp_array:
-        Seperated.append(tmp_array)
-    if K == 1:
-        return len( Seperated )
-    key = ''.join( [str(i) for i in range(1, len(Seperated) + 1)] )
-    return getminjoin( Seperated,K, key, {})
-    
+            VD[DKey] = 0
+            for count in CD:
+                VD[DKey] += K + sum([r for r in count.values() if r > 1])
+            for I in range(0, len(CD) - 1):
+                tmp_dict = AddDict(CD[I], CD[I + 1])
+                tmp_CD = CD[:I] + [tmp_dict] + CD[I+2:]
+                tmp_Key = Key[: I] + \
+                    [str(int(Key[I]) + int(Key[I+1]))] + Key[I + 2:]
+                VD[DKey] = min(
+                    VD[DKey],
+                    GetJoined(tmp_CD, K, tmp_Key, VD)
+                )
+    return VD[DKey]
+
+
+def getEff(Relative, K):
+    CD = []
+    tmp_dict = {}
+    for r in Relative:
+        if r not in tmp_dict:
+            tmp_dict[r] = 1
+        else:
+            CD.append(tmp_dict)
+            tmp_dict = {
+                r: 1
+            }
+    if tmp_dict:
+        CD.append(tmp_dict)
+    if K == 1 or len(CD) == 1:
+        return K * len(CD)
+    Key = [str(i) for i in range(1, len(CD) + 1)]
+    return(GetJoined(CD, K, Key, {}))
+
 
 def main():
     TestCase = Int()
     for _ in range(TestCase):
         _, K = Ilist()
         Relative = Ilist()
-        print(wed( Relative,K))
+        print(getEff(Relative, K))
 
 
 if __name__ == "__main__":
