@@ -42,8 +42,15 @@ def main():
                 CD[num] += 1
             else:
                 CD[num] = 1
-        Numbers = list( CD.keys())
+        Numbers = list(CD.keys())
         Numbers.sort()
+        if Numbers == [i for i in range(1, N + 1)]:
+            start = 2 ** (N - 1)
+            while start:
+                print(start, end=' ')
+                start = start // 2
+            print()
+            continue
         I = 0
         while I < len(Numbers):
             num = Numbers[I]
@@ -69,14 +76,13 @@ def main():
                 till = min(K1, K2)
                 TIS = IS
                 for K in range(1, till + 1):
-                    K1CK = ncr( K1, K)
+                    K1CK = ncr(K1, K)
                     Counts[num] += TIS * K1CK
                     TIS -= K1CK
             I += 1
         for C in Counts[1:]:
-            print( int(C) % Div , end= ' ')
+            print(int(C) % Div, end=' ')
         print()
-        
 
 
 if __name__ == "__main__":
