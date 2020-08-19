@@ -1,43 +1,59 @@
-N = int(input())
-Voters = input() + 'B'
-lastVoters = 'A'
-A_Count = 0
-B_count = 0
-Index = 0
-while Index < N + 1:
-    v = Voters[Index]
-    # print(v)
-    if v != '-':
-        lastVoters = v
-        if v == 'A':
-            A_Count += 1
+def Int():
+    return int(input())
+
+
+def List():
+    return input().split()
+
+
+def Ilist():
+    return list(map(int, input().split()))
+
+
+def yes():
+    print('YES')
+
+
+def no():
+    print('NO')
+
+
+def main():
+    N = Int()
+    Voters = 'A' + input() + 'B'
+    VC = {
+        'A': -1,
+        'B': -1
+    }
+    LV = ''
+    Index = 0
+    while Index < len(Voters):
+        Vote = Voters[Index]
+        if Vote != '-':
+            LV = Vote
+            VC[Vote] += 1
         else:
-            B_count += 1
+            DC = 0
+            while Voters[Index] == '-':
+                DC += 1
+                Index += 1
+            NV = Voters[Index]
+            if NV == LV:
+                VC[NV] += 1
+            elif LV == 'B' and NV == 'A':
+                VC['A'] += DC //2
+                VC['B'] += DC //2
+            VC[NV] += 1
+            LV = NV
+        Index += 1
+    
+    if VC['A'] == VC['B']:
+        print('Coalition Goverment')
+    elif VC['A'] > VC['B']:
+        print('A')
     else:
-        DashCount = 0
-        while Voters[Index] == '-':
-            DashCount += 1
-            Index += 1
-        nextVoter = Voters[Index]
-        if lastVoters == nextVoter:
-            if lastVoters == 'A':
-                A_Count += DashCount
-            else:
-                B_count += DashCount
-        elif lastVoters == 'B' and nextVoter == 'A':
-            A_Count += DashCount // 2
-            B_count += DashCount //2
-        if nextVoter == 'A':
-            A_Count += 1
-        else:
-            B_count += 1
-        lastVoters = nextVoter
-    Index += 1
-# print(A_Count, B_count)
-B_count -= 1
-if A_Count == B_count:
-    print('Coilation')
-elif A_Count > B_count:
-    print('A')
-else:
-    print('B')
+        print('B')
+
+if __name__ == "__main__":
+    main()
+    exit(0)
