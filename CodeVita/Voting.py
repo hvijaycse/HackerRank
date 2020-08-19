@@ -41,18 +41,19 @@ def main():
             if NV == LV:
                 VC[NV] += 1
             elif LV == 'B' and NV == 'A':
-                VC['A'] += DC //2
-                VC['B'] += DC //2
+                VC['A'] += DC // 2
+                VC['B'] += DC // 2
             VC[NV] += 1
             LV = NV
         Index += 1
-    
+
     if VC['A'] == VC['B']:
         print('Coalition Goverment')
     elif VC['A'] > VC['B']:
         print('A')
     else:
         print('B')
+
 
 if __name__ == "__main__":
     main()
