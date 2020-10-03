@@ -8,7 +8,7 @@ def main():
         count = 1
         while  last_sum < Max_Price :
             last_sum = last_sum + (last_sum + 1)
-            count += 1
+            count = count + 1
         print( count)
     return
 if __name__ == "__main__":
